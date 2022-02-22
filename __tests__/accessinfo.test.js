@@ -2,6 +2,7 @@ const { MongoClient } = require("mongodb");
 const AccessInfo = require("../models/accessinfo.model.js");
 const { testData } = require("../db/seed.js");
 require("dotenv/config");
+const request = require("supertest");
 
 describe("AccessApp Tests", () => {
   let connection;
@@ -65,24 +66,26 @@ describe("AccessApp Tests", () => {
     });
   });
 
-  it("POST - Test to check that a new post/document is submitted correctly to the database", async () => {
+  it("PATCH - Test to check updates to posts/documents are submitted correctly to the database", async () => {
     const testCollection = db.collection("AccessApp-DB-Test");
-    const mockPost = new AccessInfo({
-      _id: 16,
-      name: "Place 16",
-      wheelchair: "Yes",
-      wheelchairDesc: "ABC",
-    });
-    await testCollection.insertOne(mockPost);
 
-    const insertedPost = await testCollection.findOne({ _id: 16 });
-    expect(insertedPost).not.toBe(mockPost);
-    expect(insertedPost).toBeInstanceOf(Object);
-    expect(insertedPost).toMatchObject({
-      _id: expect.any(Number),
-      name: expect.any(String),
-      wheelchair: expect.any(String),
-      wheelchairDesc: expect.any(String),
+    await testCollection.update(
+      { _id: 13 },
+      { $set: { wheelchairDesc: "decent but not amazing" } }
+    );
+
+    const updatedPost = await testCollection.findOne({ _id: 13 });
+    expect(updatedPost).toMatchObject({
+      _id: 13,
+      wheelchairDesc: "decent but not amazing",
     });
+  });
+  it("DELETE - Test to check that a post/document is deleted using it's _id", async () => {
+    const testCollection = db.collection("AccessApp-DB-Test");
+
+    await testCollection.deleteOne({ _id: 15 });
+
+    const deletedPost = await testCollection.findOne({ _id: 15 });
+    expect(deletedPost).toEqual(null);
   });
 });
