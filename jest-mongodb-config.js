@@ -1,3 +1,5 @@
+require("dotenv/config");
+
 module.exports = {
   mongodbMemoryServerOptions: {
     binary: {
@@ -7,6 +9,5 @@ module.exports = {
     instance: {},
     autoStart: false,
   },
-  mongoURLEnvName:
-    "mongodb+srv://dbUser:dbUserPassword@accessapp-db.7pae7.mongodb.net/AccessApp-DB-Test?retryWrites=true&w=majority",
+  mongoURLEnvName: process.env.DB_CONNECTION_TEST,
 };
