@@ -31,6 +31,8 @@ exports.postAccessInfo = async (req, res, next) => {
   const newItem = new AccessInfo({
     _id: req.body._id,
     name: req.body.name,
+    lat: req.body.lat,
+    lon: req.body.lon,
     wheelchair: req.body.wheelchair,
     wheelchairDesc: req.body.wheelchairDesc,
   });

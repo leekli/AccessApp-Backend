@@ -2,6 +2,7 @@
 
 const express = require("express");
 const accessInfoRouter = require("./accessinfo.router");
+const usersRouter = require("./users.router");
 
 // Initalise Router
 const apiRouter = express.Router();
@@ -13,5 +14,8 @@ apiRouter.get("/", (req, res) => {
 
 // AccessInfo router
 apiRouter.use("/accessinfo", accessInfoRouter);
+
+// Users router
+apiRouter.use("/users", usersRouter);
 
 module.exports = apiRouter;

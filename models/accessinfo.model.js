@@ -11,6 +11,14 @@ const accessSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  lat: {
+    type: Number,
+    required: true,
+  },
+  lon: {
+    type: Number,
+    required: true,
+  },
   wheelchair: {
     type: String,
     required: true,
