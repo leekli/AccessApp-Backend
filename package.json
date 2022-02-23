@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon listen.js",
-    "dev": "env-cmd ./config/dev.env nodemon listen.js",
-    "test": "env-cmd ./config/test.env jest"
+    "start": "NODE_ENV=production nodemon listen.js",
+    "dev": "NODE_ENV=development nodemon listen.js",
+    "test": "NODE_ENV=test jest"
   },
   "repository": {
     "type": "git",
