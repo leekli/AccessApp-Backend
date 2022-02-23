@@ -24,16 +24,5 @@ if (process.env.NODE_ENV === "test") {
     }
   );
 } else if (process.env.NODE_ENV === "production") {
-  mongoose.connect(
-    process.env.MONGODB_URI,
-    { useNewUrlParser: true },
-    async () => {
-      console.log("Now connected to the PRODUCTION database...");
-      await AccessInfo.deleteMany({});
-      await AccessInfo.insertMany(devData);
-      await Users.deleteMany({});
-      await Users.insertMany(userDevData);
-      console.log("Production database is now seeded.");
-    }
-  );
+  mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
 }
