@@ -1,3 +1,5 @@
+// accessinfo.model.js - The MongoDB Schema for 'AccessInfo' collection
+
 const mongoose = require("mongoose");
 
 const accessSchema = mongoose.Schema({

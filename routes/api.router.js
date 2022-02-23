@@ -1,3 +1,5 @@
+// api.router.js - Main router which deals with all requests to /api and incorporates all subsequent routers which follow /api/...
+
 const express = require("express");
 const accessInfoRouter = require("./accessinfo.router");
 

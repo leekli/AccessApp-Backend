@@ -1,3 +1,5 @@
+// accessinfo.router.js - Router which deals with all requests to /api/accessinfo
+
 const express = require("express");
 const {
   getAccessInfo,

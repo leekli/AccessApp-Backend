@@ -1,3 +1,5 @@
+// seed.js - This file contains the seed data for for test database, used to perform tests on. An array of objects suitable for MongoDB.
+
 const AccessInfo = require("../models/accessinfo.model.js");
 
 exports.testData = [

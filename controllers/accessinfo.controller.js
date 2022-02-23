@@ -1,5 +1,8 @@
+// accessinfo.controllers.js - Controllers file containing all code for various API calls made to /api/accessinfo
+
 const AccessInfo = require("../models/accessinfo.model");
 
+// GET Request function
 exports.getAccessInfo = async (req, res) => {
   try {
     const allAccessInfo = await AccessInfo.find();
@@ -9,6 +12,7 @@ exports.getAccessInfo = async (req, res) => {
   }
 };
 
+// GET by ID Request function
 exports.getAccessInfoById = async (req, res) => {
   try {
     const returnedAccessInfo = await AccessInfo.findById(req.params.id);
@@ -18,6 +22,7 @@ exports.getAccessInfoById = async (req, res) => {
   }
 };
 
+// POST Request function
 exports.postAccessInfo = async (req, res) => {
   const newItem = new AccessInfo({
     _id: req.body._id,
@@ -34,6 +39,7 @@ exports.postAccessInfo = async (req, res) => {
   }
 };
 
+// PATCH by Id Request function
 exports.patchAccessInfoById = async (req, res) => {
   try {
     const updatedItem = await AccessInfo.updateOne(
@@ -51,6 +57,7 @@ exports.patchAccessInfoById = async (req, res) => {
   }
 };
 
+// DELETE by Id Request function
 exports.deleteAccessInfoById = async (req, res) => {
   try {
     const removedItem = await AccessInfo.deleteOne({ _id: req.params.id });

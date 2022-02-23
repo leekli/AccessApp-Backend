@@ -2,9 +2,9 @@
 
 const app = require("./app.js");
 
-const PORT = 3000;
+const port = process.env.PORT || 3000;
 
-app.listen(PORT, (err) => {
+app.listen(port, (err) => {
   if (err) console.log(err);
-  console.log("Now listening to port:", PORT);
+  console.log("Now listening to port:", port);
 });
