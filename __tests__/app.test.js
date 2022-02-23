@@ -22,6 +22,11 @@ afterAll(async () => {
 });
 
 describe("Basic tests - GET/POST/PATCH/DELETE:", () => {
+  it("GET /api - Status 200: Test to check the endpoints.json is returned", async () => {
+    const res = await request(app).get("/api").expect(200);
+    expect(res.body.allEndPoints).toBeInstanceOf(Object);
+  });
+
   it("GET /api/accessinfo - Status 200: Test to check and return all documents in the database", async () => {
     const allInfo = await request(app).get("/api/accessinfo").expect(200);
     expect(allInfo.body).toBeInstanceOf(Array);
