@@ -3,13 +3,25 @@
 const express = require("express");
 const accessInfoRouter = require("./accessinfo.router");
 const usersRouter = require("./users.router");
+const fs = require("fs/promises");
 
 // Initalise Router
 const apiRouter = express.Router();
 
-// GET request to /api
-apiRouter.get("/", (req, res) => {
-  res.send("This is the home page");
+// GET request to /api - Returns an endpoints.json file
+apiRouter.get("/", (req, res, next) => {
+  return fs
+    .readFile("./endpoints.json", "utf8")
+    .then((data) => {
+      const endpoints = JSON.parse(data);
+      return endpoints;
+    })
+    .then((allEndPoints) => {
+      res.status(200).send({ allEndPoints });
+    })
+    .catch((err) => {
+      next(err);
+    });
 });
 
 // AccessInfo router
