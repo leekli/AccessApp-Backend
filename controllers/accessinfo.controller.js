@@ -3,27 +3,31 @@
 const AccessInfo = require("../models/accessinfo.model");
 
 // GET Request function
-exports.getAccessInfo = async (req, res) => {
+exports.getAccessInfo = async (req, res, next) => {
   try {
     const allAccessInfo = await AccessInfo.find();
     res.status(200).json(allAccessInfo);
   } catch (error) {
-    res.status(500).json({ message: error });
+    next(error);
   }
 };
 
 // GET by ID Request function
-exports.getAccessInfoById = async (req, res) => {
+exports.getAccessInfoById = async (req, res, next) => {
   try {
     const returnedAccessInfo = await AccessInfo.findById(req.params.id);
-    res.status(200).json(returnedAccessInfo);
+    if (returnedAccessInfo === null) {
+      res.status(404).json({ msg: "Not found" });
+    } else {
+      res.status(200).json(returnedAccessInfo);
+    }
   } catch (error) {
-    res.status(400).json({ message: error });
+    next(error);
   }
 };
 
 // POST Request function
-exports.postAccessInfo = async (req, res) => {
+exports.postAccessInfo = async (req, res, next) => {
   const newItem = new AccessInfo({
     _id: req.body._id,
     name: req.body.name,
@@ -35,34 +39,44 @@ exports.postAccessInfo = async (req, res) => {
     const savedPost = await newItem.save();
     res.status(201).json(savedPost);
   } catch (error) {
-    res.status(400).json({ message: error });
+    next(error);
   }
 };
 
 // PATCH by Id Request function
-exports.patchAccessInfoById = async (req, res) => {
+exports.patchAccessInfoById = async (req, res, next) => {
   try {
-    const updatedItem = await AccessInfo.updateOne(
-      { _id: req.params.id },
-      {
-        $set: {
-          wheelchair: req.body.wheelchair,
-          wheelchairDesc: req.body.wheelchairDesc,
-        },
-      }
-    );
-    res.status(200).json(updatedItem);
+    const returnedAccessInfo = await AccessInfo.findById(req.params.id);
+    if (returnedAccessInfo === null) {
+      res.status(404).json({ msg: "Not found" });
+    } else {
+      const updatedItem = await AccessInfo.updateOne(
+        { _id: req.params.id },
+        {
+          $set: {
+            wheelchair: req.body.wheelchair,
+            wheelchairDesc: req.body.wheelchairDesc,
+          },
+        }
+      );
+      res.status(200).json(updatedItem);
+    }
   } catch (error) {
-    res.status(400).json({ message: error });
+    next(error);
   }
 };
 
 // DELETE by Id Request function
-exports.deleteAccessInfoById = async (req, res) => {
+exports.deleteAccessInfoById = async (req, res, next) => {
   try {
-    const removedItem = await AccessInfo.deleteOne({ _id: req.params.id });
-    res.status(204).json(removedItem);
+    const returnedAccessInfo = await AccessInfo.findById(req.params.id);
+    if (returnedAccessInfo === null) {
+      res.status(404).json({ msg: "Not found" });
+    } else {
+      const removedItem = await AccessInfo.deleteOne({ _id: req.params.id });
+      res.status(204).json(removedItem);
+    }
   } catch (error) {
-    res.status(500).json({ message: error });
+    next(error);
   }
 };
