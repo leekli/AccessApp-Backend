@@ -20,23 +20,27 @@ const commentsSchema = mongoose.Schema({
 const accessSchema = mongoose.Schema({
   _id: {
     type: Number,
-    required: false,
+    required: true,
   },
   osm_type: {
     type: String,
-    required: true,
+    required: false,
+    index: { unique: true },
   },
   name: {
     type: String,
     required: false,
+    index: { unique: true },
   },
   lat: {
     type: Array,
     required: false,
+    index: { unique: true },
   },
   lon: {
     type: Number,
     required: false,
+    index: { unique: true },
   },
   wheelchair: {
     type: String,

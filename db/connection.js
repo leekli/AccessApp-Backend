@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const AccessInfo = require("../models/accessinfo.model.js");
 const Users = require("../models/users.model.js");
 const { devData, userDevData } = require("../db/seed-development.js");
-const manchesterBigData = require("./manchesterBigData.json");
+const manchesterData = require("./manchesterSmallData.json");
 require("dotenv/config");
 
 if (process.env.NODE_ENV === "test") {
@@ -22,19 +22,17 @@ if (process.env.NODE_ENV === "test") {
       await Users.insertMany(userDevData);
       await AccessInfo.deleteMany({});
 
-      for (let i = 0; i < Object.keys(manchesterBigData).length; i++) {
-        let keyArray = manchesterBigData.features;
-        keyArray.forEach((element) => {
-          AccessInfo.create({
-            _id: element.properties["@id"].match(/[0-9]+/g).join(""),
-            osm_type: element.properties["@id"].match(/[a-zA-Z]+/g).join(""),
-            name: element.properties["name"],
-            lat: element.geometry.coordinates,
-            accessibility_ratings: [],
-            comments: [],
-          });
+      let keyArray = manchesterData.features;
+      keyArray.forEach((element) => {
+        AccessInfo.create({
+          _id: element.id.match(/[0-9]+/g).join(""),
+          osm_type: element.properties["@id"].match(/[a-zA-Z]+/g).join(""),
+          name: element.properties["name"],
+          lat: element.geometry.coordinates,
+          accessibility_ratings: [],
+          comments: [],
         });
-      }
+      });
 
       console.log("Development database is now seeded.");
     }
@@ -50,19 +48,17 @@ if (process.env.NODE_ENV === "test") {
       await Users.insertMany(userDevData);
       await AccessInfo.deleteMany({});
 
-      for (let i = 0; i < Object.keys(manchesterBigData).length; i++) {
-        let keyArray = manchesterBigData.features;
-        keyArray.forEach((element) => {
-          AccessInfo.create({
-            _id: element.properties["@id"].match(/[0-9]+/g).join(""),
-            osm_type: element.properties["@id"].match(/[a-zA-Z]+/g).join(""),
-            name: element.properties["name"],
-            lat: element.geometry.coordinates,
-            accessibility_ratings: [],
-            comments: [],
-          });
+      let keyArray = manchesterData.features;
+      keyArray.forEach((element) => {
+        AccessInfo.create({
+          _id: element.id.match(/[0-9]+/g).join(""),
+          osm_type: element.properties["@id"].match(/[a-zA-Z]+/g).join(""),
+          name: element.properties["name"],
+          lat: element.geometry.coordinates,
+          accessibility_ratings: [],
+          comments: [],
         });
-      }
+      });
 
       console.log("Production database is now seeded.");
     }
