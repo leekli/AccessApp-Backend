@@ -30,11 +30,13 @@ exports.getAccessInfoById = async (req, res, next) => {
 exports.postAccessInfo = async (req, res, next) => {
   const newItem = new AccessInfo({
     _id: req.body._id,
+    osm_type: req.body.osm_type,
     name: req.body.name,
     lat: req.body.lat,
     lon: req.body.lon,
     wheelchair: req.body.wheelchair,
     wheelchairDesc: req.body.wheelchairDesc,
+    accessibility_ratings: req.body.accessibility_ratings,
   });
 
   try {
@@ -52,16 +54,60 @@ exports.patchAccessInfoById = async (req, res, next) => {
     if (returnedAccessInfo === null) {
       res.status(404).json({ msg: "Not found" });
     } else {
-      const updatedItem = await AccessInfo.updateOne(
-        { _id: req.params.id },
-        {
-          $set: {
-            wheelchair: req.body.wheelchair,
-            wheelchairDesc: req.body.wheelchairDesc,
-          },
-        }
-      );
-      res.status(200).json(updatedItem);
+      if (req.body.comments) {
+        const updatedItem = await AccessInfo.updateOne(
+          { _id: req.params.id },
+          {
+            $set: {
+              wheelchair: req.body.wheelchair,
+              wheelchairDesc: req.body.wheelchairDesc,
+            },
+            $push: {
+              comments: {
+                author: req.body.comments.author,
+                body: req.body.comments.body,
+                commentDate: req.body.comments.commentDate,
+                total_confirmed_votes: req.body.comments.total_confirmed_votes,
+              },
+            },
+          }
+        );
+        res.status(200).json(updatedItem);
+      } else if (req.body.accessibility_ratings) {
+        const updatedItem = await AccessInfo.updateOne(
+          { _id: req.params.id },
+          {
+            $set: {
+              wheelchair: req.body.wheelchair,
+              wheelchairDesc: req.body.wheelchairDesc,
+            },
+            $push: {
+              accessibility_ratings: req.body.accessibility_ratings,
+            },
+          }
+        );
+        res.status(200).json(updatedItem);
+      } else if (req.body.wheelchairDesc) {
+        const updatedItem = await AccessInfo.updateOne(
+          { _id: req.params.id },
+          {
+            $set: {
+              wheelchairDesc: req.body.wheelchairDesc,
+            },
+          }
+        );
+        res.status(200).json(updatedItem);
+      } else if (req.body.wheelchair) {
+        const updatedItem = await AccessInfo.updateOne(
+          { _id: req.params.id },
+          {
+            $set: {
+              wheelchair: req.body.wheelchair,
+            },
+          }
+        );
+        res.status(200).json(updatedItem);
+      }
     }
   } catch (error) {
     next(error);

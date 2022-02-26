@@ -1,7 +1,7 @@
 {
   "name": "accessapp-be",
   "version": "1.0.0",
-  "description": "",
+  "description": "The backend API for the Accessibilty App",
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=production nodemon listen.js",

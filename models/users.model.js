@@ -4,6 +4,10 @@ const mongoose = require("mongoose");
 require("mongoose-type-url");
 
 const usersSchema = mongoose.Schema({
+  _id: {
+    type: String,
+    required: true,
+  },
   username: {
     type: String,
     required: true,

@@ -11,14 +11,36 @@ const mongoose = require("mongoose");
 beforeAll(async () => {
   await AccessInfo.deleteMany({});
   await AccessInfo.insertMany(testData);
+
   await Users.deleteMany({});
   await Users.insertMany(userTestData);
-  console.log("Test database is now seeded.");
+
+  console.log("TEST database is now seeded.");
 });
 
 // After all tests ends, disconnect the mongoose connection
 afterAll(async () => {
   await mongoose.connection.close();
+});
+
+describe("Data Structure Test", () => {
+  it("Tests that the accessibility rating array of numbers can be calculated on and output an average score of all numbers in that array", () => {
+    function calcAvgRating(testData) {
+      for (const key of testData) {
+        if (key._id === 1) {
+          const arrayOfNumbers = key.accessibility_ratings;
+          const arrayLength = key.accessibility_ratings.length;
+          const arrayTotal = arrayOfNumbers.reduce(
+            (partialSum, a) => partialSum + a,
+            0
+          );
+          const averageScore = Math.round(arrayTotal / arrayLength);
+          return averageScore;
+        }
+      }
+    }
+    expect(calcAvgRating(testData)).toBe(4);
+  });
 });
 
 describe("Basic tests - GET/POST/PATCH/DELETE:", () => {
@@ -35,10 +57,12 @@ describe("Basic tests - GET/POST/PATCH/DELETE:", () => {
     allInfo.body.forEach((eachItem) => {
       expect(eachItem).toMatchObject({
         _id: expect.any(Number),
+        osm_type: expect.any(String),
         name: expect.any(String),
         lat: expect.any(Number),
         lon: expect.any(Number),
         wheelchair: expect.any(String),
+        accessibility_ratings: expect.any(Array),
       });
     });
   });
@@ -48,22 +72,26 @@ describe("Basic tests - GET/POST/PATCH/DELETE:", () => {
       .get("/api/accessinfo/1")
       .expect(200);
     expect(specificInfo.body).toBeInstanceOf(Object);
-    expect(Object.keys(specificInfo.body)).toHaveLength(7);
+    expect(Object.keys(specificInfo.body)).toHaveLength(10);
     expect(specificInfo.body).toMatchObject({
       _id: expect.any(Number),
+      osm_type: expect.any(String),
       name: expect.any(String),
       lat: expect.any(Number),
       lon: expect.any(Number),
       wheelchair: expect.any(String),
       wheelchairDesc: expect.any(String),
+      accessibility_ratings: expect.any(Array),
     });
     expect(specificInfo.body).toMatchObject({
       _id: 1,
+      osm_type: "node",
       name: "Place 1",
       lat: 53.5956275,
       lon: 9.998174,
       wheelchair: "Yes",
       wheelchairDesc: "1 ramp",
+      accessibility_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
     });
   });
 
@@ -90,11 +118,13 @@ describe("Basic tests - GET/POST/PATCH/DELETE:", () => {
       .post("/api/accessinfo")
       .send({
         _id: 16,
+        osm_type: "node",
         name: "Place 16",
         lat: 53.5956275,
         lon: 9.998174,
         wheelchair: "Yes",
         wheelchairDesc: "ABC",
+        accessibility_ratings: [],
       })
       .expect(201);
     const getNewItem = await request(app).get("/api/accessinfo/16").expect(200);
@@ -102,19 +132,23 @@ describe("Basic tests - GET/POST/PATCH/DELETE:", () => {
     expect(getNewItem.body).toBeInstanceOf(Object);
     expect(getNewItem.body).toMatchObject({
       _id: expect.any(Number),
+      osm_type: expect.any(String),
       name: expect.any(String),
       lat: expect.any(Number),
       lon: expect.any(Number),
       wheelchair: expect.any(String),
       wheelchairDesc: expect.any(String),
+      accessibility_ratings: expect.any(Array),
     });
     expect(getNewItem.body).toMatchObject({
       _id: 16,
+      osm_type: "node",
       name: "Place 16",
       lat: 53.5956275,
       lon: 9.998174,
       wheelchair: "Yes",
       wheelchairDesc: "ABC",
+      accessibility_ratings: [],
     });
   });
 
@@ -123,6 +157,7 @@ describe("Basic tests - GET/POST/PATCH/DELETE:", () => {
       .post("/api/accessinfo")
       .send({
         _id: 17,
+        osm_type: "node",
         name: "Place 17",
         lat: 53.5956275,
         lon: 9.998174,
@@ -133,19 +168,23 @@ describe("Basic tests - GET/POST/PATCH/DELETE:", () => {
     expect(getNewItem.body).toBeInstanceOf(Object);
     expect(getNewItem.body).toMatchObject({
       _id: expect.any(Number),
+      osm_type: expect.any(String),
       name: expect.any(String),
       lat: expect.any(Number),
       lon: expect.any(Number),
       wheelchair: expect.any(String),
       wheelchairDesc: expect.any(String),
+      accessibility_ratings: expect.any(Array),
     });
     expect(getNewItem.body).toMatchObject({
       _id: 17,
+      osm_type: "node",
       name: "Place 17",
       lat: 53.5956275,
       lon: 9.998174,
       wheelchair: "No",
       wheelchairDesc: "No information",
+      accessibility_ratings: [],
     });
   });
 
@@ -161,18 +200,118 @@ describe("Basic tests - GET/POST/PATCH/DELETE:", () => {
     const getUpdatedItem = await request(app)
       .get("/api/accessinfo/13")
       .expect(200);
-    expect(Object.keys(getUpdatedItem.body)).toHaveLength(7);
+    expect(Object.keys(getUpdatedItem.body)).toHaveLength(10);
     expect(getUpdatedItem.body).toMatchObject({
       _id: expect.any(Number),
+      osm_type: expect.any(String),
       name: expect.any(String),
       lat: expect.any(Number),
       lon: expect.any(Number),
       wheelchair: expect.any(String),
       wheelchairDesc: expect.any(String),
+      accessibility_ratings: expect.any(Array),
     });
     expect(getUpdatedItem.body).toMatchObject({
       _id: 13,
+      osm_type: "way",
+      name: "Place 13",
+      lat: 53.5956275,
+      lon: 9.998174,
       wheelchairDesc: "decent but not amazing",
+      accessibility_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+    });
+  });
+
+  it("PATCH /api/accessinfo/:id - Status 200: Test to check an accessibility_rating is added to the existing array", async () => {
+    const updatedElements = {
+      accessibility_ratings: 98,
+    };
+
+    const updatedItem = await request(app)
+      .patch("/api/accessinfo/14")
+      .send(updatedElements)
+      .expect(200);
+    const getUpdatedItem = await request(app)
+      .get("/api/accessinfo/14")
+      .expect(200);
+    expect(Object.keys(getUpdatedItem.body)).toHaveLength(10);
+    expect(getUpdatedItem.body).toMatchObject({
+      _id: expect.any(Number),
+      osm_type: expect.any(String),
+      name: expect.any(String),
+      lat: expect.any(Number),
+      lon: expect.any(Number),
+      wheelchair: expect.any(String),
+      wheelchairDesc: expect.any(String),
+      accessibility_ratings: expect.any(Array),
+    });
+    expect(getUpdatedItem.body).toMatchObject({
+      _id: 14,
+      osm_type: "node",
+      name: "Place 14",
+      lat: 53.5956275,
+      lon: 9.998174,
+      wheelchair: "Yes",
+      wheelchairDesc: "All rooms accesible",
+      accessibility_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3, 98],
+    });
+  });
+
+  it("PATCH /api/accessinfo/:id - Status 200: Add a new comment to a venue", async () => {
+    const newComment = {
+      comments: {
+        author: "joe",
+        body: "Body 3",
+        commentDate: "2022-02-24T21:03:01.138Z",
+        total_confirmed_votes: 32,
+      },
+    };
+
+    const updatedItem = await request(app)
+      .patch("/api/accessinfo/15")
+      .send(newComment)
+      .expect(200);
+    const getUpdatedItem = await request(app)
+      .get("/api/accessinfo/15")
+      .expect(200);
+    expect(Object.keys(getUpdatedItem.body)).toHaveLength(10);
+    expect(getUpdatedItem.body).toMatchObject({
+      _id: expect.any(Number),
+      osm_type: expect.any(String),
+      name: expect.any(String),
+      lat: expect.any(Number),
+      lon: expect.any(Number),
+      wheelchair: expect.any(String),
+      wheelchairDesc: expect.any(String),
+      accessibility_ratings: expect.any(Array),
+      comments: expect.any(Array),
+    });
+    expect(getUpdatedItem.body.comments).toBeInstanceOf(Array);
+    expect(Object.keys(getUpdatedItem.body.comments)).toHaveLength(2);
+    expect(getUpdatedItem.body).toMatchObject({
+      _id: 15,
+      osm_type: "relation",
+      name: "Place 15",
+      lat: 53.5956275,
+      lon: 9.998174,
+      wheelchair: "Limited",
+      wheelchairDesc:
+        "Entrance is easily accessible, but there are steps half way into the building with are not accessible",
+      accessibility_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+      comments: [
+        {
+          author: "joe",
+          body: "Comment 1",
+          commentDate: "2022-02-24T21:03:01.138Z",
+          total_confirmed_votes: 3,
+        },
+        {
+          author: "joe",
+          body: "Body 3",
+          commentDate: "2022-02-24T21:03:01.138Z",
+          total_confirmed_votes: 32,
+        },
+      ],
     });
   });
 
@@ -242,34 +381,40 @@ describe("POST - Error testing", () => {
       .post("/api/accessinfo")
       .send({
         _id: 19,
+        osm_type: "node",
         name: "Place 19",
         lat: 53.5956275,
         lon: 9.998174,
         wheelchair: "Yes",
         wheelchairDesc: "ABC",
+        accessibility_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
         notACorrectKey: "I do not exist in the schema",
       })
       .expect(201);
     expect(res.body).toBeInstanceOf(Object);
-    expect(Object.keys(res.body)).toHaveLength(7);
+    expect(Object.keys(res.body)).toHaveLength(10);
     expect(res.body).not.toContain({
       notACorrectKey: "I do not exist in the schema",
     });
     expect(res.body).toMatchObject({
       _id: expect.any(Number),
+      osm_type: expect.any(String),
       name: expect.any(String),
       lat: expect.any(Number),
       lon: expect.any(Number),
       wheelchair: expect.any(String),
       wheelchairDesc: expect.any(String),
+      accessibility_ratings: expect.any(Array),
     });
     expect(res.body).toMatchObject({
       _id: 19,
+      osm_type: "node",
       name: "Place 19",
       lat: 53.5956275,
       lon: 9.998174,
       wheelchair: "Yes",
       wheelchairDesc: "ABC",
+      accessibility_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
     });
   });
 });
@@ -299,38 +444,16 @@ describe("PATCH - Error testing", () => {
     expect(res.body.msg).toEqual("Bad request");
   });
 
-  it("/api/accessinfo/:id Status 200: An patch request which includes a key which does not exist in the schema, is not added/patched on to the entry", async () => {
+  it("/api/accessinfo/notanid - Status 400 when a PATCH request is done on an invalid path", async () => {
     const updatedElements = {
-      keyDoesNoteExist: "This key doesnt exist in the schema",
+      accessibility_ratings: "String which shouldn't be allowed into array",
     };
 
     const res = await request(app)
-      .patch("/api/accessinfo/3")
+      .patch("/api/accessinfo/1")
       .send(updatedElements)
-      .expect(200);
-    expect(res.body).toEqual({ acknowledged: false });
-    const getNewItem = await request(app).get("/api/accessinfo/3").expect(200);
-    expect(getNewItem.body).toBeInstanceOf(Object);
-    expect(Object.keys(getNewItem.body)).toHaveLength(7);
-    expect(getNewItem.body).not.toContain({
-      keyDoesNoteExist: "This key doesnt exist in the schema",
-    });
-    expect(getNewItem.body).toMatchObject({
-      _id: expect.any(Number),
-      name: expect.any(String),
-      lat: expect.any(Number),
-      lon: expect.any(Number),
-      wheelchair: expect.any(String),
-      wheelchairDesc: expect.any(String),
-    });
-    expect(getNewItem.body).toMatchObject({
-      _id: 3,
-      name: "Place 3",
-      lat: 53.5956275,
-      lon: 9.998174,
-      wheelchair: "No",
-      wheelchairDesc: "No information",
-    });
+      .expect(400);
+    expect(res.body.msg).toEqual("Bad request");
   });
 });
 
