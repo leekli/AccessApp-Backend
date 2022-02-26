@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const AccessInfo = require("../models/accessinfo.model.js");
 const Users = require("../models/users.model.js");
 const { devData, userDevData } = require("../db/seed-development.js");
-const manchesterData = require("./manchesterSmallData.json");
+const manchesterData = require("./manchesterBigData.json");
 require("dotenv/config");
 
 if (process.env.NODE_ENV === "test") {
