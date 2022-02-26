@@ -24,23 +24,15 @@ const accessSchema = mongoose.Schema({
   },
   osm_type: {
     type: String,
-    required: false,
-    index: { unique: false },
   },
   name: {
     type: String,
-    required: false,
-    index: { unique: false },
   },
   lat: {
     type: Array,
-    required: false,
-    index: { unique: false },
   },
   lon: {
     type: Number,
-    required: false,
-    index: { unique: false },
   },
   wheelchair: {
     type: String,

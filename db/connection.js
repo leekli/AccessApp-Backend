@@ -46,6 +46,7 @@ if (process.env.NODE_ENV === "test") {
 
       await Users.deleteMany({});
       await Users.insertMany(userDevData);
+      await AccessInfo.collection.drop();
       await AccessInfo.deleteMany({});
 
       let keyArray = manchesterData.features;
