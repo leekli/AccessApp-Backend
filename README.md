@@ -35,7 +35,14 @@ There is a front-end app available for this API, which will allow you to interac
 ### **Installation requirements:**
 
 - Node.js 17.x
-- Postgres 14.x
+- Mongoose 6.x
+- Express 4.x
+- Dotenv 16.x
+- Nodemon 2.x
+- Jest 27.x
+- Supertest 6.x
+- Cors 2.x
+- Mongoose-type-url 2.x
 
 All other application dependencies are listed in the `package.json` file, FYI.
 
@@ -68,6 +75,8 @@ $ npm install
   > `MONGODB_URL=tbc`
 
 ### **Database set-up and seeding:**
+
+- **Note**: Please ensure that you have MongoDB running on your local machine before running the below commands.
 
 - Before using or testing the application, you will need to set the database up and then seed it with the data, once you receive the prompt that seeding had complete, you will be able to interact with the API through http://localhost:3000 or http://127.0.0.1:3000 locally.
 
