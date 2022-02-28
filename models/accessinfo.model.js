@@ -6,7 +6,6 @@ const commentsSchema = mongoose.Schema({
   author: String,
   body: {
     type: String,
-    required: true,
   },
   commentDate: {
     type: Date,
@@ -14,6 +13,7 @@ const commentsSchema = mongoose.Schema({
   },
   total_confirmed_votes: {
     type: Number,
+    default: 0,
   },
 });
 
@@ -24,6 +24,7 @@ const accessSchema = mongoose.Schema({
   },
   osm_type: {
     type: String,
+    required: true,
   },
   name: {
     type: String,

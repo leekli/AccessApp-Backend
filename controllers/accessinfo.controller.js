@@ -58,10 +58,6 @@ exports.patchAccessInfoById = async (req, res, next) => {
         const updatedItem = await AccessInfo.updateOne(
           { _id: req.params.id },
           {
-            $set: {
-              wheelchair: req.body.wheelchair,
-              wheelchairDesc: req.body.wheelchairDesc,
-            },
             $push: {
               comments: {
                 author: req.body.comments.author,
@@ -77,10 +73,6 @@ exports.patchAccessInfoById = async (req, res, next) => {
         const updatedItem = await AccessInfo.updateOne(
           { _id: req.params.id },
           {
-            $set: {
-              wheelchair: req.body.wheelchair,
-              wheelchairDesc: req.body.wheelchairDesc,
-            },
             $push: {
               accessibility_ratings: req.body.accessibility_ratings,
             },
