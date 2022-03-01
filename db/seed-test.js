@@ -13,6 +13,8 @@ exports.testData = [
     wheelchair: "Yes",
     wheelchairDesc: "1 ramp",
     accessibility_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+    attitude_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+    equality_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
     comments: [
       {
         author: "joe",
@@ -49,6 +51,8 @@ exports.testData = [
     wheelchair: "Yes",
     wheelchairDesc: "2 ramps",
     accessibility_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+    attitude_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+    equality_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
     comments: [],
   }),
   new AccessInfo({
@@ -59,6 +63,8 @@ exports.testData = [
     lon: 9.998174,
     wheelchair: "No",
     accessibility_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+    attitude_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+    equality_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
     comments: [
       {
         author: "joe",
@@ -83,6 +89,8 @@ exports.testData = [
     wheelchair: "Yes",
     wheelchairDesc: "No information",
     accessibility_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+    attitude_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+    equality_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
     comments: [
       {
         author: "joe",
@@ -107,6 +115,8 @@ exports.testData = [
     wheelchair: "Yes",
     wheelchairDesc: "1 ramp",
     accessibility_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+    attitude_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+    equality_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
     comments: [
       {
         author: "joe",
@@ -167,6 +177,8 @@ exports.testData = [
     wheelchair: "Yes",
     wheelchairDesc: "2 entrances",
     accessibility_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+    attitude_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+    equality_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
     comments: [
       {
         author: "joe",
@@ -202,6 +214,8 @@ exports.testData = [
     lon: 9.998174,
     wheelchair: "No",
     accessibility_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+    attitude_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+    equality_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
     comments: [
       {
         author: "joe",
@@ -268,6 +282,8 @@ exports.testData = [
     wheelchair: "Limited",
     wheelchairDesc: "Limited access",
     accessibility_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+    attitude_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+    equality_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
     comments: [
       {
         author: "joe",
@@ -285,6 +301,8 @@ exports.testData = [
     lon: 9.998174,
     wheelchair: "Limited",
     accessibility_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+    attitude_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+    equality_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
     comments: [
       {
         author: "joe",
@@ -303,6 +321,8 @@ exports.testData = [
     wheelchair: "Yes",
     wheelchairDesc: "Entrance has no steps, all rooms accessible",
     accessibility_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+    attitude_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+    equality_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
     comments: [
       {
         author: "joe",
@@ -327,6 +347,8 @@ exports.testData = [
     wheelchair: "No",
     wheelchairDesc: "Entrance has a high step",
     accessibility_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+    attitude_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+    equality_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
     comments: [
       {
         author: "joe",
@@ -352,6 +374,8 @@ exports.testData = [
     wheelchairDesc:
       "Entrance has one step with max. 3 inches height, most rooms are without steps",
     accessibility_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+    attitude_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+    equality_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
     comments: [
       {
         author: "joe",
@@ -369,6 +393,8 @@ exports.testData = [
     lon: 9.998174,
     wheelchair: "Limited",
     accessibility_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+    attitude_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+    equality_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
     comments: [],
   }),
   new AccessInfo({
@@ -380,6 +406,8 @@ exports.testData = [
     wheelchair: "Yes",
     wheelchairDesc: "All rooms accesible",
     accessibility_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+    attitude_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+    equality_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
     comments: [
       {
         author: "joe",
@@ -405,6 +433,8 @@ exports.testData = [
     wheelchairDesc:
       "Entrance is easily accessible, but there are steps half way into the building with are not accessible",
     accessibility_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+    attitude_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+    equality_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
     comments: [
       {
         author: "joe",

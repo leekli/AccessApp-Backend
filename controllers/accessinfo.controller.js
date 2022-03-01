@@ -37,6 +37,8 @@ exports.postAccessInfo = async (req, res, next) => {
     wheelchair: req.body.wheelchair,
     wheelchairDesc: req.body.wheelchairDesc,
     accessibility_ratings: req.body.accessibility_ratings,
+    attitude_ratings: req.body.attitude_ratings,
+    equality_ratings: req.body.equality_ratings,
   });
 
   try {
@@ -75,6 +77,26 @@ exports.patchAccessInfoById = async (req, res, next) => {
           {
             $push: {
               accessibility_ratings: req.body.accessibility_ratings,
+            },
+          }
+        );
+        res.status(200).json(updatedItem);
+      } else if (req.body.attitude_ratings) {
+        const updatedItem = await AccessInfo.updateOne(
+          { _id: req.params.id },
+          {
+            $push: {
+              attitude_ratings: req.body.attitude_ratings,
+            },
+          }
+        );
+        res.status(200).json(updatedItem);
+      } else if (req.body.equality_ratings) {
+        const updatedItem = await AccessInfo.updateOne(
+          { _id: req.params.id },
+          {
+            $push: {
+              equality_ratings: req.body.equality_ratings,
             },
           }
         );

@@ -7,7 +7,6 @@ const {
   getAccessInfoById,
   deleteAccessInfoById,
   patchAccessInfoById,
-  getCommentsById,
 } = require("../controllers/accessinfo.controller");
 
 // Initalise Router

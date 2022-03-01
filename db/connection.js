@@ -30,6 +30,8 @@ if (process.env.NODE_ENV === "test") {
           name: element.properties["name"],
           lat: element.geometry.coordinates,
           accessibility_ratings: [],
+          attitude_ratings: [],
+          equality_ratings: [],
           comments: [],
         });
       });
@@ -57,6 +59,8 @@ if (process.env.NODE_ENV === "test") {
           name: element.properties["name"],
           lat: element.geometry.coordinates,
           accessibility_ratings: [],
+          attitude_ratings: [],
+          equality_ratings: [],
           comments: [],
         });
       });

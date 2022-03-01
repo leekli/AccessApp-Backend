@@ -46,6 +46,8 @@ const accessSchema = mongoose.Schema({
     default: "No information",
   },
   accessibility_ratings: [Number],
+  attitude_ratings: [Number],
+  equality_ratings: [Number],
   comments: [commentsSchema],
 });
 

@@ -41,6 +41,40 @@ describe("Data Structure Test", () => {
     }
     expect(calcAvgRating(testData)).toBe(4);
   });
+  it("Tests that the attitude rating array of numbers can be calculated on and output an average score of all numbers in that array", () => {
+    function calcAvgRating(testData) {
+      for (const key of testData) {
+        if (key._id === 1) {
+          const arrayOfNumbers = key.attitude_ratings;
+          const arrayLength = key.attitude_ratings.length;
+          const arrayTotal = arrayOfNumbers.reduce(
+            (partialSum, a) => partialSum + a,
+            0
+          );
+          const averageScore = Math.round(arrayTotal / arrayLength);
+          return averageScore;
+        }
+      }
+    }
+    expect(calcAvgRating(testData)).toBe(4);
+  });
+  it("Tests that the equality rating array of numbers can be calculated on and output an average score of all numbers in that array", () => {
+    function calcAvgRating(testData) {
+      for (const key of testData) {
+        if (key._id === 1) {
+          const arrayOfNumbers = key.equality_ratings;
+          const arrayLength = key.equality_ratings.length;
+          const arrayTotal = arrayOfNumbers.reduce(
+            (partialSum, a) => partialSum + a,
+            0
+          );
+          const averageScore = Math.round(arrayTotal / arrayLength);
+          return averageScore;
+        }
+      }
+    }
+    expect(calcAvgRating(testData)).toBe(4);
+  });
 });
 
 describe("Basic tests - GET/POST/PATCH/DELETE:", () => {
@@ -63,6 +97,8 @@ describe("Basic tests - GET/POST/PATCH/DELETE:", () => {
         lon: expect.any(Number),
         wheelchair: expect.any(String),
         accessibility_ratings: expect.any(Array),
+        attitude_ratings: expect.any(Array),
+        equality_ratings: expect.any(Array),
       });
     });
   });
@@ -72,7 +108,7 @@ describe("Basic tests - GET/POST/PATCH/DELETE:", () => {
       .get("/api/accessinfo/1")
       .expect(200);
     expect(specificInfo.body).toBeInstanceOf(Object);
-    expect(Object.keys(specificInfo.body)).toHaveLength(10);
+    expect(Object.keys(specificInfo.body)).toHaveLength(12);
     expect(specificInfo.body).toMatchObject({
       _id: expect.any(Number),
       osm_type: expect.any(String),
@@ -82,6 +118,8 @@ describe("Basic tests - GET/POST/PATCH/DELETE:", () => {
       wheelchair: expect.any(String),
       wheelchairDesc: expect.any(String),
       accessibility_ratings: expect.any(Array),
+      attitude_ratings: expect.any(Array),
+      equality_ratings: expect.any(Array),
     });
     expect(specificInfo.body).toMatchObject({
       _id: 1,
@@ -92,6 +130,8 @@ describe("Basic tests - GET/POST/PATCH/DELETE:", () => {
       wheelchair: "Yes",
       wheelchairDesc: "1 ramp",
       accessibility_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+      attitude_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+      equality_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
     });
   });
 
@@ -125,6 +165,8 @@ describe("Basic tests - GET/POST/PATCH/DELETE:", () => {
         wheelchair: "Yes",
         wheelchairDesc: "ABC",
         accessibility_ratings: [],
+        attitude_ratings: [],
+        equality_ratings: [],
       })
       .expect(201);
     const getNewItem = await request(app).get("/api/accessinfo/16").expect(200);
@@ -139,6 +181,8 @@ describe("Basic tests - GET/POST/PATCH/DELETE:", () => {
       wheelchair: expect.any(String),
       wheelchairDesc: expect.any(String),
       accessibility_ratings: expect.any(Array),
+      attitude_ratings: expect.any(Array),
+      equality_ratings: expect.any(Array),
     });
     expect(getNewItem.body).toMatchObject({
       _id: 16,
@@ -149,6 +193,8 @@ describe("Basic tests - GET/POST/PATCH/DELETE:", () => {
       wheelchair: "Yes",
       wheelchairDesc: "ABC",
       accessibility_ratings: [],
+      attitude_ratings: [],
+      equality_ratings: [],
     });
   });
 
@@ -175,6 +221,8 @@ describe("Basic tests - GET/POST/PATCH/DELETE:", () => {
       wheelchair: expect.any(String),
       wheelchairDesc: expect.any(String),
       accessibility_ratings: expect.any(Array),
+      attitude_ratings: expect.any(Array),
+      equality_ratings: expect.any(Array),
     });
     expect(getNewItem.body).toMatchObject({
       _id: 17,
@@ -185,6 +233,8 @@ describe("Basic tests - GET/POST/PATCH/DELETE:", () => {
       wheelchair: "No",
       wheelchairDesc: "No information",
       accessibility_ratings: [],
+      attitude_ratings: [],
+      equality_ratings: [],
     });
   });
 
@@ -200,7 +250,7 @@ describe("Basic tests - GET/POST/PATCH/DELETE:", () => {
     const getUpdatedItem = await request(app)
       .get("/api/accessinfo/13")
       .expect(200);
-    expect(Object.keys(getUpdatedItem.body)).toHaveLength(10);
+    expect(Object.keys(getUpdatedItem.body)).toHaveLength(12);
     expect(getUpdatedItem.body).toMatchObject({
       _id: expect.any(Number),
       osm_type: expect.any(String),
@@ -210,6 +260,8 @@ describe("Basic tests - GET/POST/PATCH/DELETE:", () => {
       wheelchair: expect.any(String),
       wheelchairDesc: expect.any(String),
       accessibility_ratings: expect.any(Array),
+      attitude_ratings: expect.any(Array),
+      equality_ratings: expect.any(Array),
     });
     expect(getUpdatedItem.body).toMatchObject({
       _id: 13,
@@ -219,6 +271,8 @@ describe("Basic tests - GET/POST/PATCH/DELETE:", () => {
       lon: 9.998174,
       wheelchairDesc: "decent but not amazing",
       accessibility_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+      attitude_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+      equality_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
     });
   });
 
@@ -234,7 +288,7 @@ describe("Basic tests - GET/POST/PATCH/DELETE:", () => {
     const getUpdatedItem = await request(app)
       .get("/api/accessinfo/14")
       .expect(200);
-    expect(Object.keys(getUpdatedItem.body)).toHaveLength(10);
+    expect(Object.keys(getUpdatedItem.body)).toHaveLength(12);
     expect(getUpdatedItem.body).toMatchObject({
       _id: expect.any(Number),
       osm_type: expect.any(String),
@@ -244,6 +298,8 @@ describe("Basic tests - GET/POST/PATCH/DELETE:", () => {
       wheelchair: expect.any(String),
       wheelchairDesc: expect.any(String),
       accessibility_ratings: expect.any(Array),
+      attitude_ratings: expect.any(Array),
+      equality_ratings: expect.any(Array),
     });
     expect(getUpdatedItem.body).toMatchObject({
       _id: 14,
@@ -254,6 +310,85 @@ describe("Basic tests - GET/POST/PATCH/DELETE:", () => {
       wheelchair: "Yes",
       wheelchairDesc: "All rooms accesible",
       accessibility_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3, 98],
+      attitude_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+      equality_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+    });
+  });
+
+  it("PATCH /api/accessinfo/:id - Status 200: Test to check an attitude_rating is added to the existing array", async () => {
+    const updatedElements = {
+      attitude_ratings: 54,
+    };
+
+    const updatedItem = await request(app)
+      .patch("/api/accessinfo/10")
+      .send(updatedElements)
+      .expect(200);
+    const getUpdatedItem = await request(app)
+      .get("/api/accessinfo/10")
+      .expect(200);
+    expect(Object.keys(getUpdatedItem.body)).toHaveLength(12);
+    expect(getUpdatedItem.body).toMatchObject({
+      _id: expect.any(Number),
+      osm_type: expect.any(String),
+      name: expect.any(String),
+      lat: expect.any(Array),
+      lon: expect.any(Number),
+      wheelchair: expect.any(String),
+      wheelchairDesc: expect.any(String),
+      accessibility_ratings: expect.any(Array),
+      attitude_ratings: expect.any(Array),
+      equality_ratings: expect.any(Array),
+    });
+    expect(getUpdatedItem.body).toMatchObject({
+      _id: 10,
+      osm_type: "way",
+      name: "Place 10",
+      lat: [53.5956275],
+      lon: 9.998174,
+      wheelchair: "Yes",
+      wheelchairDesc: "Entrance has no steps, all rooms accessible",
+      accessibility_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+      attitude_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3, 54],
+      equality_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+    });
+  });
+
+  it("PATCH /api/accessinfo/:id - Status 200: Test to check an equality_rating is added to the existing array", async () => {
+    const updatedElements = {
+      equality_ratings: 32,
+    };
+
+    const updatedItem = await request(app)
+      .patch("/api/accessinfo/3")
+      .send(updatedElements)
+      .expect(200);
+    const getUpdatedItem = await request(app)
+      .get("/api/accessinfo/3")
+      .expect(200);
+    expect(Object.keys(getUpdatedItem.body)).toHaveLength(12);
+    expect(getUpdatedItem.body).toMatchObject({
+      _id: expect.any(Number),
+      osm_type: expect.any(String),
+      name: expect.any(String),
+      lat: expect.any(Array),
+      lon: expect.any(Number),
+      wheelchair: expect.any(String),
+      wheelchairDesc: expect.any(String),
+      accessibility_ratings: expect.any(Array),
+      attitude_ratings: expect.any(Array),
+      equality_ratings: expect.any(Array),
+    });
+    expect(getUpdatedItem.body).toMatchObject({
+      _id: 3,
+      osm_type: "node",
+      name: "Place 3",
+      lat: [53.5956275],
+      lon: 9.998174,
+      wheelchair: "No",
+      accessibility_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+      attitude_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+      equality_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3, 32],
     });
   });
 
@@ -274,7 +409,7 @@ describe("Basic tests - GET/POST/PATCH/DELETE:", () => {
     const getUpdatedItem = await request(app)
       .get("/api/accessinfo/15")
       .expect(200);
-    expect(Object.keys(getUpdatedItem.body)).toHaveLength(10);
+    expect(Object.keys(getUpdatedItem.body)).toHaveLength(12);
     expect(getUpdatedItem.body).toMatchObject({
       _id: expect.any(Number),
       osm_type: expect.any(String),
@@ -284,6 +419,8 @@ describe("Basic tests - GET/POST/PATCH/DELETE:", () => {
       wheelchair: expect.any(String),
       wheelchairDesc: expect.any(String),
       accessibility_ratings: expect.any(Array),
+      attitude_ratings: expect.any(Array),
+      equality_ratings: expect.any(Array),
       comments: expect.any(Array),
     });
     expect(getUpdatedItem.body.comments).toBeInstanceOf(Array);
@@ -298,6 +435,8 @@ describe("Basic tests - GET/POST/PATCH/DELETE:", () => {
       wheelchairDesc:
         "Entrance is easily accessible, but there are steps half way into the building with are not accessible",
       accessibility_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+      attitude_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+      equality_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
       comments: [
         {
           author: "joe",
@@ -388,11 +527,13 @@ describe("POST - Error testing", () => {
         wheelchair: "Yes",
         wheelchairDesc: "ABC",
         accessibility_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+        attitude_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+        equality_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
         notACorrectKey: "I do not exist in the schema",
       })
       .expect(201);
     expect(res.body).toBeInstanceOf(Object);
-    expect(Object.keys(res.body)).toHaveLength(10);
+    expect(Object.keys(res.body)).toHaveLength(12);
     expect(res.body).not.toContain({
       notACorrectKey: "I do not exist in the schema",
     });
@@ -405,6 +546,8 @@ describe("POST - Error testing", () => {
       wheelchair: expect.any(String),
       wheelchairDesc: expect.any(String),
       accessibility_ratings: expect.any(Array),
+      attitude_ratings: expect.any(Array),
+      equality_ratings: expect.any(Array),
     });
     expect(res.body).toMatchObject({
       _id: 19,
@@ -415,6 +558,8 @@ describe("POST - Error testing", () => {
       wheelchair: "Yes",
       wheelchairDesc: "ABC",
       accessibility_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+      attitude_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+      equality_ratings: [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
     });
   });
 });
