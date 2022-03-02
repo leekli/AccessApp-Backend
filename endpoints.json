@@ -1,5 +1,147 @@
 {
-    "Endpoints": {
-      "Key": "Endpoints.json to be written"
+  "GET /api": {
+    "description": "serves up a JSON representation of all the available endpoints of this api"
+  },
+  "GET /api/accessinfo": {
+    "description": "serves an array of all the venues within Manchester City Centre being used by the app (Very large file)",
+    "queries": [],
+    "exampleResponse": {
+      "_id": 1,
+      "osm_type": "node",
+      "name": "Place 1",
+      "lat": [53.5956275],
+      "lon": 9.998174,
+      "wheelchair": "Yes",
+      "wheelchairDesc": "1 ramp",
+      "accessibility_ratings": [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+      "attitude_ratings": [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+      "equality_ratings": [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+      "comments": [
+        {
+          "author": "joe",
+          "body": "Comment 1",
+          "commentDate": "2022-02-24T21:03:01.138Z",
+          "total_confirmed_votes": 2
+        },
+        {
+          "author": "joe",
+          "body": "Comment 2",
+          "commentDate": "2022-02-24T21:03:01.138Z",
+          "total_confirmed_votes": 5
+        },
+        {
+          "author": "joe",
+          "body": "Comment 3",
+          "commentDate": "2022-02-24T21:03:01.138Z",
+          "total_confirmed_votes": 1
+        },
+        {
+          "author": "joe",
+          "body": "Comment 4",
+          "commentDate": "2022-02-24T21:03:01.138Z",
+          "total_confirmed_votes": 0
+        }
+      ]
     }
+  },
+  "GET /api/accessinfo/:id": {
+    "description": "serves an array of the specified venue by id",
+    "queries": [],
+    "exampleResponse": {
+      "_id": 1,
+      "osm_type": "node",
+      "name": "Place 1",
+      "lat": [53.5956275],
+      "lon": 9.998174,
+      "wheelchair": "Yes",
+      "wheelchairDesc": "1 ramp",
+      "accessibility_ratings": [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+      "attitude_ratings": [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+      "equality_ratings": [5, 4, 5, 4, 3, 5, 4, 3, 1, 4, 3],
+      "comments": [
+        {
+          "author": "joe",
+          "body": "Comment 1",
+          "commentDate": "2022-02-24T21:03:01.138Z",
+          "total_confirmed_votes": 2
+        },
+        {
+          "author": "joe",
+          "body": "Comment 2",
+          "commentDate": "2022-02-24T21:03:01.138Z",
+          "total_confirmed_votes": 5
+        },
+        {
+          "author": "joe",
+          "body": "Comment 3",
+          "commentDate": "2022-02-24T21:03:01.138Z",
+          "total_confirmed_votes": 1
+        },
+        {
+          "author": "joe",
+          "body": "Comment 4",
+          "commentDate": "2022-02-24T21:03:01.138Z",
+          "total_confirmed_votes": 0
+        }
+      ]
+    }
+  },
+  "GET /api/users": {
+    "description": "serves an array of all users",
+    "queries": [],
+    "exampleResponse": {
+      "users": [
+        {
+          "_id": "joe",
+          "username": "joe",
+          "first_name": "Joe",
+          "last_name": "Bloggs",
+          "city": "Manchester",
+          "avatar_url": "https://www.w3schools.com/howto/img_avatar.png",
+          "wheelchairUser": true
+        }
+      ]
+    }
+  },
+  "GET /api/users/:id": {
+    "description": "serves an array of the specified user by id/username",
+    "queries": [],
+    "exampleResponse": {
+      "_id": "joe",
+      "username": "joe",
+      "first_name": "Joe",
+      "last_name": "Bloggs",
+      "city": "Manchester",
+      "avatar_url": "https://www.w3schools.com/howto/img_avatar.png",
+      "wheelchairUser": true
+    }
+  },
+  "POST /api/accessinfo": {
+    "description": "posts a new venue as an object into an array, into the database",
+    "queries": [],
+    "exampleResponse": {
+      "venue": [
+        {
+          "_id": 16,
+          "osm_type": "node",
+          "name": "Place 16",
+          "lat": [53.5956275],
+          "lon": 9.998174,
+          "wheelchair": "Yes",
+          "wheelchairDesc": "ABC",
+          "accessibility_ratings": [],
+          "attitude_ratings": [],
+          "equality_ratings": []
+        }
+      ]
+    }
+  },
+  "PATCH /api/accessinfo/:id": {
+    "description": "patches/updates an existing venue by id. This patch request can be updated to update the following objects: wheelchair, wheelchairDesc, accessibility_ratings, attitude_ratings, equality_ratings, comments. Use this patch request to add comments to a venue by ID also",
+    "queries": []
+  },
+  "DELETE /api/accessinfo/:id": {
+    "description": "deletes a specified venue by id from the database - no response returned",
+    "queries": []
   }
+}
