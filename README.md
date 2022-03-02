@@ -1,4 +1,4 @@
-# **AcesssApp - Back End API** 🗞
+# **Inclusive Manchester App - Back End API**
 
 ## **Northcoders Group Project - Back End**
 
