@@ -35,7 +35,6 @@ if (process.env.NODE_ENV === "test") {
           comments: [],
         });
       });
-
       console.log("Development database is now seeded.");
     }
   );

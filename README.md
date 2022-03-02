@@ -4,7 +4,7 @@
 
 ---
 
-## **Built by:** The Reactors ☢️ (MKD, Lee, Matt, Tumi)
+## **Built by:** The Reactors ☢️ (Mohammed Kabir Dastgir, Lee Kirkham, Matt Shaw, Muhammad Tumi)
 
 ---
 
@@ -15,8 +15,8 @@
 
 ## **Front-End (For this Back-End API)**
 
-- Front-End - Hosted version Link: _tbc_
-- Front-End - Git-Hub Repo Link: _tbc_
+- Front-End - Hosted version Link: https://github.com/MKD01/accessapp-fe
+- Front-End - Git-Hub Repo Link: https://inclusive-manchester.netlify.app/
 
 ---
 
@@ -26,7 +26,7 @@ An API for the AccessApp: Built using Node.js, Express.js server and a MongoDB d
 
 All endpoints can be found in the `endpoints.json` file or go to https://accessapp-be.herokuapp.com/api/ which lists all endpoints which can be interacted with.
 
-There is a front-end app available for this API, which will allow you to interact with it, available at: _tbc_
+There is a front-end app available for this API, which will allow you to interact with it, available at: https://inclusive-manchester.netlify.app/
 
 ---
 
